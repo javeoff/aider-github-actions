@@ -74,7 +74,7 @@ permissions:
 
 jobs:
   generate:
-    uses: javeoff/aider-github-actions/.github/workflows/aider-issue.yml
+    uses: javeoff/aider-github-actions/.github/workflows/aider-issue.yml@main
     if: github.event.label.name == 'aider'
     with:
       issue-number: ${{ github.event.issue.number }}
