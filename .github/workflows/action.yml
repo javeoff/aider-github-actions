@@ -1,4 +1,4 @@
-name: Aider Workflow
+﻿name: Aider Workflow
 
 on:
   issues:
@@ -23,7 +23,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install Aider
-        run: pip install aider
+        run: pip install aider-chat
 
       - name: Fetch issue details
         id: fetch_issue
