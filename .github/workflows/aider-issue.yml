@@ -148,7 +148,7 @@ jobs:
 
             return { 
               title: result.data.title.replace(/"/g, "'").replace(/`/g, '\\`'), 
-              body: result.data.body.replace(/"/g, "'").replace(/`/g, '\\`'),
+              body: result.data?.body?.replace(/"/g, "'").replace(/`/g, '\\`'),
             };
       - name: Create prompt
         uses: actions/github-script@v7
