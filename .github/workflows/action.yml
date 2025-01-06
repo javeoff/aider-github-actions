@@ -9,7 +9,6 @@ jobs:
     if: github.event.label.name == 'aider'
     permissions:
       issues: read
-      pull-requests: write
       contents: write
     with:
       issue-number: ${{ github.event.issue.number }}
