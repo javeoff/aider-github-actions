@@ -28,6 +28,39 @@ This repository contains GitHub Actions workflows that automatically generate pu
 
 3. The workflow will be triggered when you add the `aider` label to any issue
 
+## 📄 Workflow Configuration
+
+Create a workflow file at `.github/workflows/aider.yml`:
+
+```yaml
+name: Aider Issue Handler
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  handle-labeled-issue:
+    if: github.event.label.name == 'aider'
+    uses: ./.github/workflows/aider-issue.yml
+    with:
+      base-branch: main  # or your default branch
+      chat-timeout: 10   # timeout in minutes
+      model: gpt-4-1106-preview  # or your preferred model
+      issue-number: ${{ github.event.issue.number }}
+    secrets:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+      # Add other API keys as needed:
+      # anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+      # gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+      # groq_api_key: ${{ secrets.GROQ_API_KEY }}
+      # cohere_api_key: ${{ secrets.COHERE_API_KEY }}
+      # deepseek_api_key: ${{ secrets.DEEPSEEK_API_KEY }}
+      # openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
+```
+
+This workflow will trigger when an issue is labeled with 'aider' and use the reusable workflow to process the issue.
+
 ## ⚙️ Configuration
 
 The main workflow can be customized through the following inputs:
@@ -42,6 +75,29 @@ The main workflow can be customized through the following inputs:
 2. Add the `aider` label to the issue
 3. The workflow will create a new branch and apply the requested changes
 4. Review the changes and create a pull request if desired
+
+## 📋 Example
+
+Here's a sample issue that demonstrates how to use the GitHub Aider Action:
+
+### Issue Title
+"Update error handling in login.js"
+
+### Issue Description
+```
+Please improve the error handling in login.js:
+1. Add try/catch blocks around the database queries
+2. Show user-friendly error messages
+3. Add logging for debugging
+```
+
+When you add the `aider` label to this issue:
+1. A new branch named `update-error-handling-in-login-js` will be created
+2. Aider will process these instructions and make the requested changes
+3. The changes will be committed to the branch
+4. You can then review and create a PR with the changes
+
+The more specific and clear your issue description is, the better results you'll get from Aider.
 
 ## 📦 Artifacts
 
