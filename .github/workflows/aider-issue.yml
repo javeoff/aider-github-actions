@@ -148,6 +148,30 @@ jobs:
 
             return { ref: result.data.ref }
 
+      - name: Update comment after branch creation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: ${{ inputs.issue-number }},
+              body: `✅ Created branch: ${context.payload.ref}`
+            });
+
+      - name: Create initial comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: ${{ inputs.issue-number }},
+              body: '🚀 Starting Aider workflow...'
+            });
+
       - name: Get issue
         uses: actions/github-script@v7
         id: get_issue
@@ -192,6 +216,30 @@ jobs:
           groq_api_key: ${{ secrets.groq_api_key }}
           openrouter_api_key: ${{ secrets.openrouter_api_key }}
 
+      - name: Update comment with Aider output
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let aiderOutput = '';
+            try {
+              const history = fs.readFileSync('.aider.chat.history.md', 'utf8');
+              // Extract Aider's initial plan (before first code change)
+              const initialPlan = history.split('```')[0];
+              aiderOutput = initialPlan;
+            } catch (error) {
+              aiderOutput = 'Could not read Aider output';
+            }
+            
+            const { repo, owner } = context.repo;
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: ${{ inputs.issue-number }},
+              body: `### 🤖 Aider's Plan:\n\n${aiderOutput}`
+            });
+
       - name: Upload aider chat history
         uses: actions/upload-artifact@v3
         with:
@@ -227,3 +275,16 @@ jobs:
             });
             
             console.log(`Created PR #${pr.data.number}: ${pr.data.html_url}`);
+
+      - name: Final status update
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: ${{ inputs.issue-number }},
+              body: `✅ Workflow completed successfully!\nPull Request has been created.`
+            });
