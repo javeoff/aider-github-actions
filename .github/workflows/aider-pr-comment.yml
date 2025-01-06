@@ -5,8 +5,11 @@ on:
 
 jobs:
   process-comment:
-    # Проверяем что это комментарий в PR и PR имеет метку aider
-    if: ${{ github.event.issue.pull_request && contains(github.event.issue.labels.*.name, 'aider') }}
+    # Проверяем что это комментарий в PR, PR имеет метку aider, и комментарий не от GitHub Actions
+    if: |
+      github.event.issue.pull_request && 
+      contains(github.event.issue.labels.*.name, 'aider') && 
+      github.event.comment.user.login != 'github-actions[bot]'
     permissions:
       pull-requests: write
       contents: write
