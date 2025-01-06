@@ -20,7 +20,13 @@ This repository contains GitHub Actions workflows that automatically generate pu
    - `DEEPSEEK_API_KEY`
    - `OPENROUTER_API_KEY`
 
-2. The workflow will be triggered when you add the `aider` label to any issue
+2. Create a GitHub Personal Access Token (PAT) with `repo` scope and add it as a repository secret named `GH_TOKEN`. This token is required for:
+   - Creating branches
+   - Committing changes
+   - Creating pull requests
+   - Other GitHub API operations
+
+3. The workflow will be triggered when you add the `aider` label to any issue
 
 ## ⚙️ Configuration
 
