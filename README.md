@@ -59,6 +59,30 @@ jobs:
       # openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
 ```
 
+```
+name: Auto-generate PR using Aider
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  issues: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate:
+    uses: javeoff/aider-github-actions/.github/workflows/aider-issue.yml
+    if: github.event.label.name == 'aider'
+    with:
+      issue-number: ${{ github.event.issue.number }}
+      base-branch: ${{ github.event.repository.default_branch }}
+      model: openrouter/anthropic/claude-3.5-sonnet
+    secrets:
+      openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+```
+
 This workflow will trigger when an issue is labeled with 'aider' and use the reusable workflow to process the issue.
 
 ## ⚙️ Configuration
