@@ -28,6 +28,39 @@ This repository contains GitHub Actions workflows that automatically generate pu
 
 3. The workflow will be triggered when you add the `aider` label to any issue
 
+## 📄 Workflow Configuration
+
+Create a workflow file at `.github/workflows/aider.yml`:
+
+```yaml
+name: Aider Issue Handler
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  handle-labeled-issue:
+    if: github.event.label.name == 'aider'
+    uses: ./.github/workflows/aider-issue.yml
+    with:
+      base-branch: main  # or your default branch
+      chat-timeout: 10   # timeout in minutes
+      model: gpt-4-1106-preview  # or your preferred model
+      issue-number: ${{ github.event.issue.number }}
+    secrets:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+      # Add other API keys as needed:
+      # anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+      # gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+      # groq_api_key: ${{ secrets.GROQ_API_KEY }}
+      # cohere_api_key: ${{ secrets.COHERE_API_KEY }}
+      # deepseek_api_key: ${{ secrets.DEEPSEEK_API_KEY }}
+      # openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
+```
+
+This workflow will trigger when an issue is labeled with 'aider' and use the reusable workflow to process the issue.
+
 ## ⚙️ Configuration
 
 The main workflow can be customized through the following inputs:
