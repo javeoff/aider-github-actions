@@ -205,4 +205,12 @@ jobs:
               base: '${{ inputs.base-branch }}'
             });
             
+            // Add aider label to the PR
+            await github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: pr.data.number,
+              labels: ['aider']
+            });
+            
             console.log(`Created PR #${pr.data.number}: ${pr.data.html_url}`);

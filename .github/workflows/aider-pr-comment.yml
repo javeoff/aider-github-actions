@@ -5,8 +5,8 @@ on:
 
 jobs:
   process-comment:
-    # Проверяем что это комментарий в PR и содержит @aider
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '@aider') }}
+    # Проверяем что это комментарий в PR и PR имеет метку aider
+    if: ${{ github.event.issue.pull_request && contains(github.event.issue.labels.*.name, 'aider') }}
     permissions:
       pull-requests: write
       contents: write
@@ -31,7 +31,7 @@ jobs:
             });
             return { 
               branch: pr.data.head.ref,
-              comment: '${{ github.event.comment.body }}'.replace('@aider', '').trim()
+              comment: '${{ github.event.comment.body }}'
             };
 
       - name: Apply changes with Aider
@@ -58,5 +58,5 @@ jobs:
               owner,
               repo,
               issue_number: context.issue.number,
-              body: 'Changes requested in the comment have been applied. Please review the new commit.'
+              body: 'Changes have been applied based on your comment. Please review the new commit.'
             });
