@@ -1,0 +1,39 @@
+name: Aider Workflow
+
+on:
+  issues:
+    types:
+      - opened
+  pull_request_review_comment:
+    types:
+      - created
+
+jobs:
+  handle_issue:
+    name: Generate Code for Issue
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Aider
+        run: pip install aider
+
+      - name: Fetch issue details
+        id: fetch_issue
+        run: |
+          echo "${{ toJson(github.event.issue) }}" > issue.json
+
+      - name: Run Aider to generate code
+        run: |
+          aider --create --input-file issue.json
+
+      - name: Push changes
+        run: |
+          git push
