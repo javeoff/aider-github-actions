@@ -59,7 +59,9 @@ jobs:
       # openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
 ```
 
-```
+### OpenRouter Example
+
+```yaml
 name: Auto-generate PR using Aider
 on:
   issues:
