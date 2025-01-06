@@ -157,7 +157,7 @@ jobs:
               owner,
               repo,
               issue_number: ${{ inputs.issue-number }},
-              body: `✅ Created branch: ${context.payload.ref}`
+              body: `✅ Created branch: ${{ fromJson(steps.create_branch.outputs.result).ref }}`
             });
 
       - name: Create initial comment
