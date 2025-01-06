@@ -43,6 +43,29 @@ The main workflow can be customized through the following inputs:
 3. The workflow will create a new branch and apply the requested changes
 4. Review the changes and create a pull request if desired
 
+## 📋 Example
+
+Here's a sample issue that demonstrates how to use the GitHub Aider Action:
+
+### Issue Title
+"Update error handling in login.js"
+
+### Issue Description
+```
+Please improve the error handling in login.js:
+1. Add try/catch blocks around the database queries
+2. Show user-friendly error messages
+3. Add logging for debugging
+```
+
+When you add the `aider` label to this issue:
+1. A new branch named `update-error-handling-in-login-js` will be created
+2. Aider will process these instructions and make the requested changes
+3. The changes will be committed to the branch
+4. You can then review and create a PR with the changes
+
+The more specific and clear your issue description is, the better results you'll get from Aider.
+
 ## 📦 Artifacts
 
 The workflow saves the Aider chat history as an artifact that can be downloaded from the workflow run page.
