@@ -2,6 +2,17 @@
 
 This repository contains GitHub Actions workflows that automatically generate pull requests using [Aider](https://github.com/paul-gauthier/aider) in response to issues labeled with 'aider'.
 
+## ✨ Key Features
+
+- 🤖 Automated code changes using AI
+- 🏷️ Simple trigger using 'aider' label on issues
+- 💬 PR comment support with `/aider` command
+- 🔄 Multiple AI model support (OpenAI, Anthropic, Google, etc.)
+- 🛠️ Customizable workflow settings
+- 📦 Chat history saved as workflow artifacts
+- 🔒 Secure API key handling
+- 🌿 Automatic branch creation and commits
+
 ## 🔄 How It Works
 
 1. When an issue is labeled with 'aider' 🏷️, the workflow is triggered
