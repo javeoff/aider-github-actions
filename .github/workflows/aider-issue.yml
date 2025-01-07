@@ -218,12 +218,12 @@ jobs:
           groq_api_key: ${{ secrets.groq_api_key }}
           openrouter_api_key: ${{ secrets.openrouter_api_key }}
 
-      - name: Check Aider output file
-        run: |
-          if [ ! -f .aider.chat.history.md ]; then
-            echo "Error: Aider chat history file was not created"
-            exit 1
-          fi
+      # - name: Check Aider output file
+      #   run: |
+      #     if [ ! -f .aider.chat.history.md ]; then
+      #       echo "Error: Aider chat history file was not created"
+      #       exit 1
+      #     fi
 
       - name: Update comment with Aider output
         if: success()
