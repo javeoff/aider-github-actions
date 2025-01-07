@@ -208,7 +208,7 @@ jobs:
         with:
           branch: ${{ fromJson(steps.create_branch.outputs.result).ref }}
           model: ${{ inputs.model }}
-          aider_args: '--architect --yes --message "${{ steps.create_prompt.outputs.result }}"'
+          aider_args: '--architect --yes --message "${{ steps.create_prompt.outputs.result }}" --chat-history-file .aider.chat.history.md'
           # API keys
           openai_api_key: ${{ secrets.openai_api_key }}
           anthropic_api_key: ${{ secrets.anthropic_api_key }}
@@ -217,6 +217,13 @@ jobs:
           gemini_api_key: ${{ secrets.gemini_api_key }}
           groq_api_key: ${{ secrets.groq_api_key }}
           openrouter_api_key: ${{ secrets.openrouter_api_key }}
+
+      - name: Check Aider output file
+        run: |
+          if [ ! -f .aider.chat.history.md ]; then
+            echo "Error: Aider chat history file was not created"
+            exit 1
+          fi
 
       - name: Update comment with Aider output
         if: success()
