@@ -87,6 +87,35 @@ jobs:
 
 This workflow will trigger when an issue is labeled with 'aider' and use the reusable workflow to process the issue.
 
+### Example with custom Aider arguments
+
+```yaml
+name: Auto-generate PR using Aider
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  issues: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate:
+    uses: javeoff/aider-github-actions/.github/workflows/aider-issue.yml@main
+    if: github.event.label.name == 'aider'
+    with:
+      issue-number: ${{ github.event.issue.number }}
+      base-branch: ${{ github.event.repository.default_branch }}
+      model: gpt-4-1106-preview
+      custom-aider-args: '--no-auto-commits --skip-steps'  # Custom Aider arguments
+    secrets:
+      openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+```
+
+This example shows how to pass custom arguments to Aider using the `custom-aider-args` parameter. You can use any valid Aider command-line arguments.
+
 ## 🤖 Supported AI Models
 
 The action supports multiple AI providers through their respective API keys:
@@ -110,6 +139,7 @@ The main workflow can be customized through the following inputs:
 - `model`: AI model to use (default: gpt-4-1106-preview)
 - `issue-number`: Issue number to process (required for issue workflow)
 - `pr-number`: PR number to process (required for PR comment workflow)
+- `custom-aider-args`: Additional arguments to pass to Aider (optional)
 
 ## 📝 Usage
 
