@@ -208,7 +208,7 @@ jobs:
         with:
           branch: ${{ fromJson(steps.create_branch.outputs.result).ref }}
           model: ${{ inputs.model }}
-          aider_args: '--architect --yes --message "${{ steps.create_prompt.outputs.result }}" --chat-history-file .aider.chat.history.md'
+          aider_args: '--architect --yes --message "${{ steps.create_prompt.outputs.result }}"'
           # API keys
           openai_api_key: ${{ secrets.openai_api_key }}
           anthropic_api_key: ${{ secrets.anthropic_api_key }}
