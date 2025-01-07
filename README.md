@@ -87,6 +87,20 @@ jobs:
 
 This workflow will trigger when an issue is labeled with 'aider' and use the reusable workflow to process the issue.
 
+## 🤖 Supported AI Models
+
+The action supports multiple AI providers through their respective API keys:
+
+- OpenAI (GPT-4, GPT-3.5)
+- Anthropic (Claude)
+- Google (Gemini)
+- Groq
+- Cohere
+- DeepSeek
+- OpenRouter (access to multiple models)
+
+Configure the desired model using the `model` input parameter and provide the corresponding API key as a secret.
+
 ## ⚙️ Configuration
 
 The main workflow can be customized through the following inputs:
@@ -94,6 +108,8 @@ The main workflow can be customized through the following inputs:
 - `base-branch`: Base branch to create PR against (default: repository's default branch)
 - `chat-timeout`: Timeout for chat in minutes (default: 10)
 - `model`: AI model to use (default: gpt-4-1106-preview)
+- `issue-number`: Issue number to process (required for issue workflow)
+- `pr-number`: PR number to process (required for PR comment workflow)
 
 ## 📝 Usage
 
@@ -101,6 +117,18 @@ The main workflow can be customized through the following inputs:
 2. Add the `aider` label to the issue
 3. The workflow will create a new branch and apply the requested changes
 4. Review the changes and create a pull request if desired
+
+## 💬 PR Comments
+
+You can also use Aider to make changes by commenting on pull requests. When you add a comment starting with `/aider` on a PR, the workflow will:
+1. Process your instructions
+2. Make the requested changes
+3. Commit them to the PR branch
+
+Example comment:
+```
+/aider Please add error handling to this function
+```
 
 ## 📋 Example
 
