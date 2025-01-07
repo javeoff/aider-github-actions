@@ -69,6 +69,17 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if [ -f "package.json" ]; then
+            npm install
+          fi
+
       - name: Cache pip packages
         uses: actions/cache@v3
         with:
