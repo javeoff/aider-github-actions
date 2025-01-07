@@ -220,6 +220,7 @@ jobs:
         if: success()
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GH_TOKEN }}
           script: |
             const fs = require('fs');
             let aiderOutput = '';
